@@ -14,23 +14,23 @@ public class CurrencyRequest {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(updatable = false, nullable = false)
-        UUID id;
+        private UUID id;
 
         @NotNull
         @NotBlank
         @Size(min = 3, max = 3)
-        String currencyName;
+        private String currencyName;
 
         @NotNull
         @NotBlank
         @Size(max = 100)
-        String requesterName;
+        private String requesterName;
 
         @CreationTimestamp
         @Column(updatable = false)
-        Timestamp date;
+        private Timestamp date;
 
-        Float currencyValue;
+        private Float currencyValue;
 
         public CurrencyRequest() {
         }
