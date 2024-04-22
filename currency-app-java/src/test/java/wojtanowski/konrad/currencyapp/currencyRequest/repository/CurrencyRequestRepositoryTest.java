@@ -28,7 +28,7 @@ class CurrencyRequestRepositoryTest {
     void testGetAllCurrencyRequestsNotEmpty() {
         CurrencyRequest currencyRequest = new CurrencyRequest("EUR", "Jan Kowalski", 4.87F);
 
-        CurrencyRequest saved = currencyRequestRepository.save(currencyRequest);
+        currencyRequestRepository.save(currencyRequest);
         currencyRequestRepository.flush();
 
         List<CurrencyRequest> list = currencyRequestRepository.findAll();
