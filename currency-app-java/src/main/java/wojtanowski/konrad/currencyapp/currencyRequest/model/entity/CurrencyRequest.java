@@ -9,25 +9,37 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public record CurrencyRequest(
+@Entity
+public class CurrencyRequest {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(updatable = false, nullable = false)
-        UUID id,
+        UUID id;
 
         @NotNull
         @NotBlank
         @Size(min = 3, max = 3)
-        String currency,
+        String currency;
 
         @NotNull
         @NotBlank
         @Size(max = 100)
-        String name,
+        String name;
 
         @CreationTimestamp
         @Column(updatable = false)
-        Timestamp date,
+        Timestamp date;
 
-        Integer value
-) {}
+        Integer currencyValue;
+
+        public CurrencyRequest() {
+        }
+
+        public CurrencyRequest(UUID id, String currency, String name, Timestamp date, Integer currencyValue) {
+                this.id = id;
+                this.currency = currency;
+                this.name = name;
+                this.date = date;
+                this.currencyValue = currencyValue;
+        }
+}
