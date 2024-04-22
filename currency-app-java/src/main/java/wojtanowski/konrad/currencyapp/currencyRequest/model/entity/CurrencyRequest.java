@@ -19,12 +19,12 @@ public class CurrencyRequest {
         @NotNull
         @NotBlank
         @Size(min = 3, max = 3)
-        String currency;
+        String currencyName;
 
         @NotNull
         @NotBlank
         @Size(max = 100)
-        String name;
+        String requesterName;
 
         @CreationTimestamp
         @Column(updatable = false)
@@ -35,11 +35,9 @@ public class CurrencyRequest {
         public CurrencyRequest() {
         }
 
-        public CurrencyRequest(UUID id, String currency, String name, Timestamp date, Integer currencyValue) {
-                this.id = id;
-                this.currency = currency;
-                this.name = name;
-                this.date = date;
+        public CurrencyRequest(String currencyName, String requesterName, Integer currencyValue) {
+                this.currencyName = currencyName;
+                this.requesterName = requesterName;
                 this.currencyValue = currencyValue;
         }
 }
