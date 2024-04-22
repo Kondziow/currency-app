@@ -30,14 +30,34 @@ public class CurrencyRequest {
         @Column(updatable = false)
         Timestamp date;
 
-        Integer currencyValue;
+        Float currencyValue;
 
         public CurrencyRequest() {
         }
 
-        public CurrencyRequest(String currencyName, String requesterName, Integer currencyValue) {
+        public CurrencyRequest(String currencyName, String requesterName, Float currencyValue) {
                 this.currencyName = currencyName;
                 this.requesterName = requesterName;
                 this.currencyValue = currencyValue;
+        }
+
+        public UUID getId() {
+                return id;
+        }
+
+        public String getCurrencyName() {
+                return currencyName;
+        }
+
+        public String getRequesterName() {
+                return requesterName;
+        }
+
+        public Timestamp getDate() {
+                return date;
+        }
+
+        public Float getCurrencyValue() {
+                return currencyValue;
         }
 }
