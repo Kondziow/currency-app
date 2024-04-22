@@ -1,6 +1,8 @@
 package wojtanowski.konrad.currencyapp.currencyRequest.model.dto;
 
-public class GetCurrencyRequestsDTO {
+import java.util.List;
 
-
+public record GetCurrencyRequestsDTO(
+        List<GetCurrencyRequestDTO> currencyRequests
+) {
 }
