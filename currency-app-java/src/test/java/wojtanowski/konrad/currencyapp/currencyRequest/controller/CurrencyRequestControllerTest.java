@@ -11,11 +11,9 @@ import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyReque
 import wojtanowski.konrad.currencyapp.currencyRequest.service.api.CurrencyRequestService;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
