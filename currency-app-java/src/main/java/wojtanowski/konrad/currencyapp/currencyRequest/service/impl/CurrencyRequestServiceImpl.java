@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestsDTO;
+import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyValueDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.PostCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.entity.CurrencyRequest;
 import wojtanowski.konrad.currencyapp.currencyRequest.repository.CurrencyRequestRepository;
@@ -36,15 +37,16 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     }
 
     @Override
-    public Float postCurrencyRequest(String currencyName, PostCurrencyRequestDTO currencyRequest) throws Exception {
+    public GetCurrencyValueDTO postCurrencyRequest(String currencyName, PostCurrencyRequestDTO currencyRequest) throws Exception {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/api/exchangerates/tables/A?format=json", String.class);
         String response = responseEntity.getBody();
 
-        float responseValue = findCurrencyValue(response, currencyName);
+        return new GetCurrencyValueDTO(findCurrencyValue(response, currencyName));
+    }
 
-        currencyRequestRepository.save(new CurrencyRequest(currencyRequest.currencyName(), currencyRequest.requesterName(), responseValue));
-
-        return responseValue;
+    @Override
+    public void saveCurrencyRequest(PostCurrencyRequestDTO currencyRequest, Float currencyValue) {
+        currencyRequestRepository.save(new CurrencyRequest(currencyRequest.currencyName(), currencyRequest.requesterName(),currencyValue));
     }
 
     Float findCurrencyValue(String jsonResponse, String currencyName) throws JsonProcessingException {

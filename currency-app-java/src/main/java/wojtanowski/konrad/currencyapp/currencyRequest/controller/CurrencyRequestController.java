@@ -1,10 +1,13 @@
 package wojtanowski.konrad.currencyapp.currencyRequest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestsDTO;
+import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyValueDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.PostCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.service.api.CurrencyRequestService;
 
@@ -22,18 +25,25 @@ public class CurrencyRequestController {
     }
 
     @PostMapping(CURRENCY_POST_PATH)
-    public ResponseEntity<Float> postCurrencyRequest(
+    public ResponseEntity<GetCurrencyValueDTO> postCurrencyRequest(
             @PathVariable("currencyName") String currencyName,
             @RequestBody PostCurrencyRequestDTO currencyRequest
     ) {
-        Float response;
+        GetCurrencyValueDTO responseDTO;
         try {
-            response = currencyRequestService.postCurrencyRequest(currencyName, currencyRequest);
+            responseDTO = currencyRequestService.postCurrencyRequest(currencyName, currencyRequest);
         } catch (Exception ex) {
-            //System.out.println(ex);
             throw new RuntimeException(ex);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
+        Float response = responseDTO.currencyValue();
+
+        if(response < 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        currencyRequestService.saveCurrencyRequest(currencyRequest, response);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @Autowired
