@@ -37,11 +37,11 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     }
 
     @Override
-    public GetCurrencyValueDTO postCurrencyRequest(String currencyName, PostCurrencyRequestDTO currencyRequest) throws Exception {
+    public GetCurrencyValueDTO postCurrencyRequest(PostCurrencyRequestDTO currencyRequest) throws Exception {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/api/exchangerates/tables/A?format=json", String.class);
         String response = responseEntity.getBody();
 
-        return new GetCurrencyValueDTO(findCurrencyValue(response, currencyName));
+        return new GetCurrencyValueDTO(findCurrencyValue(response, currencyRequest.currencyName()));
     }
 
     @Override

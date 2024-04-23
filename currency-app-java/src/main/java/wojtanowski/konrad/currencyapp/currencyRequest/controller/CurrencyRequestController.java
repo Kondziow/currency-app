@@ -13,7 +13,7 @@ import wojtanowski.konrad.currencyapp.currencyRequest.service.api.CurrencyReques
 @RestController
 public class CurrencyRequestController {
     public static final String CURRENCY_PATH = "/currencies";
-    public static final String CURRENCY_POST_PATH = CURRENCY_PATH + "/{currencyName}";
+    public static final String CURRENCY_POST_PATH = CURRENCY_PATH + "/get-current-currency-value-command";
     public static final String CURRENCIES_GET_PATH = CURRENCY_PATH + "/requests";
 
     private final CurrencyRequestService currencyRequestService;
@@ -25,12 +25,11 @@ public class CurrencyRequestController {
 
     @PostMapping(CURRENCY_POST_PATH)
     public ResponseEntity<GetCurrencyValueDTO> postCurrencyRequest(
-            @PathVariable("currencyName") String currencyName,
             @RequestBody PostCurrencyRequestDTO currencyRequest
     ) {
         GetCurrencyValueDTO responseDTO;
         try {
-            responseDTO = currencyRequestService.postCurrencyRequest(currencyName, currencyRequest);
+            responseDTO = currencyRequestService.postCurrencyRequest(currencyRequest);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

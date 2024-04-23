@@ -7,7 +7,7 @@ import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.PostCurrencyRequ
 
 public interface CurrencyRequestService {
     GetCurrencyRequestsDTO getAllCurrencyRequests();
-    GetCurrencyValueDTO postCurrencyRequest(String currencyName, @Valid PostCurrencyRequestDTO currencyRequest) throws Exception;
+    GetCurrencyValueDTO postCurrencyRequest(@Valid PostCurrencyRequestDTO currencyRequest) throws Exception;
     void saveCurrencyRequest(PostCurrencyRequestDTO currencyRequest, Float currencyValue);
 
 }
