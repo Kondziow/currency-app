@@ -19,7 +19,7 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
 
     @Override
     public GetCurrencyRequestsDTO getAllCurrencyRequests() {
-        currencyRequestRepository.save(new CurrencyRequest("EUR", "JAN KOWALSKI", 4.4567F));
+        //currencyRequestRepository.save(new CurrencyRequest("EUR", "JAN KOWALSKI", 4.4567F));
 
         return new GetCurrencyRequestsDTO(currencyRequestRepository.findAll()
                 .stream()
