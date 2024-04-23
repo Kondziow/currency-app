@@ -30,9 +30,7 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
 
         return new GetCurrencyRequestsDTO(currencyRequestRepository.findAll()
                 .stream()
-                .map(value -> {
-                    return new GetCurrencyRequestDTO(value.getCurrencyName(), value.getRequesterName(), value.getDate(), value.getCurrencyValue());
-                })
+                .map(value -> new GetCurrencyRequestDTO(value.getCurrencyName(), value.getRequesterName(), value.getDate(), value.getCurrencyValue()))
                 .collect(Collectors.toList())
         );
     }
