@@ -35,6 +35,12 @@ class CurrencyRequestRepositoryTest {
 
         assertThat(list).isNotNull();
         assertThat(list.size()).isEqualTo(1);
+
+        System.out.println(list.get(0).getId());
+        System.out.println(list.get(0).getCurrencyName());
+        System.out.println(list.get(0).getRequesterName());
+        System.out.println(list.get(0).getDate());
+        System.out.println(list.get(0).getCurrencyValue());
     }
 
     @Test
