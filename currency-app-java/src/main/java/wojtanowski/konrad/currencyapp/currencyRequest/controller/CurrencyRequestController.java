@@ -3,6 +3,7 @@ package wojtanowski.konrad.currencyapp.currencyRequest.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestsDTO;
@@ -25,7 +26,7 @@ public class CurrencyRequestController {
 
     @PostMapping(CURRENCY_POST_PATH)
     public ResponseEntity<GetCurrencyValueDTO> postCurrencyRequest(
-            @RequestBody PostCurrencyRequestDTO currencyRequest
+            @Validated @RequestBody PostCurrencyRequestDTO currencyRequest
     ) {
         GetCurrencyValueDTO responseDTO;
         try {

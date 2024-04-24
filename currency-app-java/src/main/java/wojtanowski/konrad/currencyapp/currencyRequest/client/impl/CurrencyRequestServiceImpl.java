@@ -1,13 +1,12 @@
-package wojtanowski.konrad.currencyapp.currencyRequest.service.impl;
+package wojtanowski.konrad.currencyapp.currencyRequest.client.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import wojtanowski.konrad.currencyapp.currencyRequest.client.api.CurrencyRequestClient;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestsDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyValueDTO;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     private final CurrencyRequestRepository currencyRequestRepository;
-    private final RestTemplate restTemplate;
+    private final CurrencyRequestClient client;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -38,10 +37,11 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
 
     @Override
     public GetCurrencyValueDTO postCurrencyRequest(PostCurrencyRequestDTO currencyRequest) throws Exception {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/api/exchangerates/tables/A?format=json", String.class);
-        String response = responseEntity.getBody();
+        String responseString = client.getCurrencies();
 
-        return new GetCurrencyValueDTO(findCurrencyValue(response, currencyRequest.currencyName()));
+        Float responseValue = findCurrencyValue(responseString, currencyRequest.currencyName());
+
+        return new GetCurrencyValueDTO(responseValue);
     }
 
     @Override
@@ -68,9 +68,9 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     }
 
     @Autowired
-    public CurrencyRequestServiceImpl(CurrencyRequestRepository currencyRequestRepository, RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public CurrencyRequestServiceImpl(CurrencyRequestRepository currencyRequestRepository, CurrencyRequestClient client, ObjectMapper objectMapper) {
         this.currencyRequestRepository = currencyRequestRepository;
-        this.restTemplate = restTemplate;
+        this.client = client;
         this.objectMapper = objectMapper;
     }
 }
