@@ -40,7 +40,7 @@ public class CurrencyRequestController {
         Float response = responseDTO.currencyValue();
 
         if(response < 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "INVALID CURRENCY NAME");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         currencyRequestService.saveCurrencyRequest(currencyRequest, response);
 
