@@ -33,10 +33,8 @@ export class CurrencyAddComponent implements OnInit{
     this.response = '';
     this.currencyService.postCurrencyRequest(this.currencyForm.value)
       .subscribe(response => {
-        console.log(response)
         this.response = response.currencyValue;
       }, error => {
-        console.log(error)
         if (error.error.status == 404) {
           this.error = 'Currency Not Found'
         } else {
