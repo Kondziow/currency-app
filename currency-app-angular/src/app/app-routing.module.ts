@@ -1,11 +1,18 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {CurrencyComponent} from "./currency/currency.component";
+import {CurrencyAddComponent} from "./currency/currency-add/currency-add.component";
 
 const routes: Routes = [
   {
     path: 'currencies',
-    component: CurrencyComponent
+    component: CurrencyComponent,
+    children:[
+      {
+        path: 'new',
+        component: CurrencyAddComponent
+      }
+    ]
   },
   {
     path: '',

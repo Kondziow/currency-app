@@ -2,11 +2,17 @@
   <div class="col-xs-6">
     <hr>
     <button class="btn btn-success" (click)="getCurrencyRequests()">Get Currency Requests</button>
+    <button class="btn btn-primary" (click)="onSendCurrencyRequest()" [disabled]="buttonDisabled">Send Currency Requests</button>
     <hr>
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let currencyReq of currencyRequests">
+      <li
+        class="list-group-item"
+        *ngFor="let currencyReq of currencyRequests">
         <app-currency-item [currency]="currencyReq"></app-currency-item>
       </li>
     </ul>
+  </div>
+  <div class="col-xs-6">
+    <router-outlet></router-outlet>
   </div>
 </div>
