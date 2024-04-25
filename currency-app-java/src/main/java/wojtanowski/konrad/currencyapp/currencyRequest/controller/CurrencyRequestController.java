@@ -15,7 +15,7 @@ import wojtanowski.konrad.currencyapp.currencyRequest.service.api.CurrencyReques
 
 @RestController
 public class CurrencyRequestController {
-    public static final String CURRENCY_PATH = "/currencies";
+    public static final String CURRENCY_PATH = "/api/currencies";
     public static final String CURRENCY_POST_PATH = CURRENCY_PATH + "/get-current-currency-value-command";
     public static final String CURRENCIES_GET_PATH = CURRENCY_PATH + "/requests";
 
