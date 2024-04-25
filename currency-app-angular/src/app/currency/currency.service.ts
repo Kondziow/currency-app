@@ -1,6 +1,5 @@
-import {Observable} from "rxjs";
+
 import {HttpClient} from "@angular/common/http";
-import {CurrencyModel} from "./models/currency.model";
 import {Injectable} from "@angular/core";
 import {CurrencyRequestModel} from "./models/currencyRequest.model";
 
@@ -18,6 +17,6 @@ export class CurrencyService{
   }
 
   postCurrencyRequest(currencyRequest: CurrencyRequestModel) {
-    return this.http.post(this.postCurrencyUrl, currencyRequest);
+    return this.http.post<any>(this.postCurrencyUrl, currencyRequest);
   }
 }

@@ -18,7 +18,6 @@ import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 })
 export class CurrencyComponent implements OnInit{
   currencyRequests: CurrencyModel[] = [];
-  buttonDisabled = false;
 
   constructor(private currencyService: CurrencyService,
               private route: ActivatedRoute,
@@ -38,7 +37,6 @@ export class CurrencyComponent implements OnInit{
 
   onSendCurrencyRequest() {
     this.router.navigate(['new'], {relativeTo: this.route});
-    this.buttonDisabled = true;
   }
 
 }

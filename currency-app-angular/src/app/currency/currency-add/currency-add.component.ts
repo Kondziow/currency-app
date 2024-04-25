@@ -2,18 +2,22 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CurrencyService} from "../currency.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-currency-add',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './currency-add.component.html',
   styleUrl: './currency-add.component.css'
 })
 export class CurrencyAddComponent implements OnInit{
   currencyForm: FormGroup;
+  response = '';
+  error = '';
 
   constructor(private currencyService: CurrencyService,
               private route: ActivatedRoute,
@@ -25,9 +29,20 @@ export class CurrencyAddComponent implements OnInit{
   }
 
   onSubmit() {
+    this.error = '';
+    this.response = '';
     this.currencyService.postCurrencyRequest(this.currencyForm.value)
       .subscribe(response => {
         console.log(response)
+        this.response = response.currencyValue;
+      }, error => {
+        console.log(error)
+        if (error.error.status == 404) {
+          this.error = 'Currency Not Found'
+        } else {
+          this.error = error.error.error
+        }
+
       })
   }
 
@@ -51,6 +66,4 @@ export class CurrencyAddComponent implements OnInit{
       ])
     })
   }
-
-  protected readonly onsubmit = onsubmit;
 }

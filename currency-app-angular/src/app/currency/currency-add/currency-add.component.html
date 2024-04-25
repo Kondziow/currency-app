@@ -26,8 +26,6 @@
               id="requesterName"
               formControlName="requesterName"
               class="form-control">
-
-
           </div>
         </div>
       </div>
@@ -41,6 +39,16 @@
               formControlName="currencyName"
               class="form-control">
           </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="response !== ''">
+        <div class="col-xs-12">
+          <h5><strong class="text-muted">Response:</strong> {{response}}</h5>
+        </div>
+      </div>
+      <div class="row" *ngIf="error !== ''">
+        <div class="col-xs-12 text-danger">
+          <h5><strong>ERROR OCCURS: {{error}}</strong></h5>
         </div>
       </div>
 
