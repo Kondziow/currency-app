@@ -1,11 +1,13 @@
-package wojtanowski.konrad.currencyapp.currencyRequest.client.impl;
+package wojtanowski.konrad.currencyapp.currencyRequest.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import wojtanowski.konrad.currencyapp.currencyRequest.client.api.CurrencyRequestClient;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyRequestsDTO;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Primary
 @Service
+@Validated
 public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     private final CurrencyRequestRepository currencyRequestRepository;
     private final CurrencyRequestClient client;
@@ -36,12 +39,15 @@ public class CurrencyRequestServiceImpl implements CurrencyRequestService {
     }
 
     @Override
-    public GetCurrencyValueDTO postCurrencyRequest(PostCurrencyRequestDTO currencyRequest) throws Exception {
-        String responseString = client.getCurrencies();
+    public GetCurrencyValueDTO postCurrencyRequest(PostCurrencyRequestDTO currencyRequest) {
 
-        Float responseValue = findCurrencyValue(responseString, currencyRequest.currencyName());
-
-        return new GetCurrencyValueDTO(responseValue);
+        try {
+            String responseString = client.getCurrencies();
+            Float responseValue = findCurrencyValue(responseString, currencyRequest.currencyName());
+            return new GetCurrencyValueDTO(responseValue);
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException("JSON processing error", ex);
+        }
     }
 
     @Override
