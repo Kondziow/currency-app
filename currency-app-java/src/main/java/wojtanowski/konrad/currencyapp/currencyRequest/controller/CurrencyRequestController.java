@@ -1,8 +1,6 @@
 package wojtanowski.konrad.currencyapp.currencyRequest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,6 @@ import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.GetCurrencyValue
 import wojtanowski.konrad.currencyapp.currencyRequest.model.dto.PostCurrencyRequestDTO;
 import wojtanowski.konrad.currencyapp.currencyRequest.service.api.CurrencyRequestService;
 
-import java.util.HashSet;
 
 @RestController
 public class CurrencyRequestController {
