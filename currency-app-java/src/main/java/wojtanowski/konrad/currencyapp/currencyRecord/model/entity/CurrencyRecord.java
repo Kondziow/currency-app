@@ -1,4 +1,4 @@
-package wojtanowski.konrad.currencyapp.currencyRequest.model.entity;
+package wojtanowski.konrad.currencyapp.currencyRecord.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-public class CurrencyRequest {
+public class CurrencyRecord {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(updatable = false, nullable = false)
@@ -32,10 +32,10 @@ public class CurrencyRequest {
 
         private Float currencyValue;
 
-        public CurrencyRequest() {
+        public CurrencyRecord() {
         }
 
-        public CurrencyRequest(String currencyName, String requesterName, Float currencyValue) {
+        public CurrencyRecord(String currencyName, String requesterName, Float currencyValue) {
                 this.currencyName = currencyName;
                 this.requesterName = requesterName;
                 this.currencyValue = currencyValue;

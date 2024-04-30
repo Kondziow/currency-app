@@ -36,7 +36,7 @@ export class CurrencyAddComponent implements OnInit{
         this.response = response.currencyValue;
       }, error => {
         if (error.error.status == 404) {
-          this.error = 'Currency Not Found'
+          this.error = 'Currency Not Found. Check Currency Name.'
         } else {
           this.error = error.error.error
         }

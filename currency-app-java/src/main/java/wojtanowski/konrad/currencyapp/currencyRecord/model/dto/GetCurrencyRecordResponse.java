@@ -1,9 +1,8 @@
-package wojtanowski.konrad.currencyapp.currencyRequest.model.dto;
+package wojtanowski.konrad.currencyapp.currencyRecord.model.dto;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 
-public record GetCurrencyRequestDTO(
+public record GetCurrencyRecordResponse(
         String currencyName,
         String requesterName,
         Timestamp date,

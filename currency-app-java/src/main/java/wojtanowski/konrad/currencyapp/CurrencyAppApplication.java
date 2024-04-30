@@ -21,7 +21,7 @@ public class CurrencyAppApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:4200")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+						.allowedMethods("GET", "POST")
 						.allowedHeaders("*")
 						.allowCredentials(true);
 			}

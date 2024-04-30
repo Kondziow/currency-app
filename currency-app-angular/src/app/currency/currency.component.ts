@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrencyModel} from "./models/currency.model";
+import {CurrencyRecordModel} from "./models/currencyRecord.model";
 import {CurrencyService} from "./currency.service";
 import {CurrencyItemComponent} from "./currency-item/currency-item.component";
 import {NgForOf} from "@angular/common";
@@ -17,7 +17,7 @@ import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
   styleUrl: './currency.component.css'
 })
 export class CurrencyComponent implements OnInit{
-  currencyRequests: CurrencyModel[] = [];
+  currencyRecords: CurrencyRecordModel[] = [];
 
   constructor(private currencyService: CurrencyService,
               private route: ActivatedRoute,
@@ -25,13 +25,13 @@ export class CurrencyComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getCurrencyRequests();
+    this.getCurrencyRecords();
   }
 
-  getCurrencyRequests() {
-    this.currencyService.getAllCurrencyRequests()
+  getCurrencyRecords() {
+    this.currencyService.getAllCurrencyRecords()
       .subscribe(response => {
-        this.currencyRequests = response.currencyRequests;
+        this.currencyRecords = response.currencyRecords;
       });
   }
 

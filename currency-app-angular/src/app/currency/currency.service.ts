@@ -12,7 +12,7 @@ export class CurrencyService{
   constructor(private http: HttpClient) {
   }
 
-  getAllCurrencyRequests() {
+  getAllCurrencyRecords() {
     return this.http.get<any>(this.getCurrencyUrl);
   }
 

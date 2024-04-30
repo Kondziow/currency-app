@@ -1,4 +1,4 @@
-export class CurrencyModel {
+export class CurrencyRecordModel {
   constructor(
     public currencyName: string,
     public requesterName: string,

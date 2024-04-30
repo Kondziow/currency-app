@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CurrencyModel} from "../models/currency.model";
+import {CurrencyRecordModel} from "../models/currencyRecord.model";
 
 @Component({
   selector: 'app-currency-item',
@@ -9,6 +9,6 @@ import {CurrencyModel} from "../models/currency.model";
   styleUrl: './currency-item.component.css'
 })
 export class CurrencyItemComponent {
-  @Input() currency: CurrencyModel;
+  @Input() currency: CurrencyRecordModel;
 
 }
