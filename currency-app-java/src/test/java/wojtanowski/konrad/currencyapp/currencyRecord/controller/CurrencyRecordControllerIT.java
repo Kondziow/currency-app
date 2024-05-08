@@ -4,12 +4,13 @@ import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordsResponse;
+import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyValueResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.PostCurrencyRecordRequest;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.entity.CurrencyRecord;
@@ -29,11 +30,12 @@ class CurrencyRecordControllerIT {
 
     @Test
     void testGetAllCurrencyRecordsEmpty() {
-        GetCurrencyRecordsResponse response = currencyRecordController.getAllCurrencies().getBody();
+        Page<GetCurrencyRecordResponse> response = currencyRecordController.getAllCurrencies(1, 25).getBody();
 
         assertThat(response).isNotNull();
-        assertThat(response.currencyRecords()).isNotNull();
-        assertThat(response.currencyRecords().size()).isEqualTo(0);
+        assertThat(response).isNotNull();
+        assertThat(response.getSize()).isEqualTo(25);
+        assertThat(response.getContent().size()).isEqualTo(0);
     }
 
     @Rollback
@@ -42,11 +44,12 @@ class CurrencyRecordControllerIT {
     void testGetAllCurrencyRecordsNotEmpty() {
         currencyRecordRepository.save(new CurrencyRecord("EUR", "JAN KOWALSKI", 4.6F));
 
-        GetCurrencyRecordsResponse response = currencyRecordController.getAllCurrencies().getBody();
+        Page<GetCurrencyRecordResponse> response = currencyRecordController.getAllCurrencies(1, 25).getBody();
 
         assertThat(response).isNotNull();
-        assertThat(response.currencyRecords()).isNotNull();
-        assertThat(response.currencyRecords().size()).isEqualTo(1);
+        assertThat(response).isNotNull();
+        assertThat(response.getSize()).isEqualTo(25);
+        assertThat(response.getContent().size()).isEqualTo(1);
     }
 
     @Rollback

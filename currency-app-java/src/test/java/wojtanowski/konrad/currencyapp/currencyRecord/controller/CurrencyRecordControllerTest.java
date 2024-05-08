@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordResponse;
-import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordsResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyValueResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.PostCurrencyRecordRequest;
 import wojtanowski.konrad.currencyapp.currencyRecord.service.api.CurrencyRecordService;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,16 +36,16 @@ class CurrencyRecordControllerTest {
 
     @Test
     void testGetAllCurrencyRecords() throws Exception {
-        given(currencyRecordService.getAllCurrencyRecords())
-                .willReturn(new GetCurrencyRecordsResponse(
-                        Arrays.asList(getGetCurrencyRecordResponse1(), getGetCurrencyRecordResponse2())
+        given(currencyRecordService.getAllCurrencyRecords(any(), any()))
+                .willReturn(new PageImpl<>(
+                        List.of(getGetCurrencyRecordResponse1(), getGetCurrencyRecordResponse2())
                 ));
 
         mockMvc.perform(get(CurrencyRecordController.CURRENCIES_GET_PATH))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.currencyRecords").isArray())
-                .andExpect(jsonPath("$.currencyRecords.length()", is(2)));
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content.length()", is(2)));
     }
 
     @Test

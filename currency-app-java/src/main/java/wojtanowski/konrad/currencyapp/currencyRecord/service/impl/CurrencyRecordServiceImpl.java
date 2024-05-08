@@ -5,34 +5,41 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import wojtanowski.konrad.currencyapp.currencyRecord.client.api.CurrencyRecordClient;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordResponse;
-import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyRecordsResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.GetCurrencyValueResponse;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.dto.PostCurrencyRecordRequest;
 import wojtanowski.konrad.currencyapp.currencyRecord.model.entity.CurrencyRecord;
 import wojtanowski.konrad.currencyapp.currencyRecord.repository.CurrencyRecordRepository;
 import wojtanowski.konrad.currencyapp.currencyRecord.service.api.CurrencyRecordService;
 
-import java.util.stream.Collectors;
-
 @Primary
 @Service
 @Validated
 public class CurrencyRecordServiceImpl implements CurrencyRecordService {
+    private final static int DEFAULT_PAGE = 0;
+    private final static int DEFAULT_PAGE_SIZE = 25;
     private final CurrencyRecordRepository currencyRecordRepository;
     private final CurrencyRecordClient client;
     private final ObjectMapper objectMapper;
 
     @Override
-    public GetCurrencyRecordsResponse getAllCurrencyRecords() {
-        return new GetCurrencyRecordsResponse(currencyRecordRepository.findAll()
-                .stream()
-                .map(value -> new GetCurrencyRecordResponse(value.getCurrencyName(), value.getRequesterName(), value.getDate(), value.getCurrencyValue()))
-                .collect(Collectors.toList())
-        );
+    public Page<GetCurrencyRecordResponse> getAllCurrencyRecords(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = buildPageRequest(pageNumber, pageSize);
+
+        Page<CurrencyRecord> currencyRecordPage = currencyRecordRepository.findAll(pageRequest);
+
+        return currencyRecordPage
+                .map(value -> new GetCurrencyRecordResponse(
+                        value.getCurrencyName(),
+                        value.getRequesterName(),
+                        value.getDate(),
+                        value.getCurrencyValue()));
+
     }
 
     @Override
@@ -66,6 +73,29 @@ public class CurrencyRecordServiceImpl implements CurrencyRecordService {
         }
 
         return responseValue;
+    }
+
+    private PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {
+        int queryPageNumber;
+        int queryPageSize;
+
+        if (pageNumber != null && pageNumber > 0) {
+            queryPageNumber = pageNumber - 1;
+        } else {
+            queryPageNumber = DEFAULT_PAGE;
+        }
+
+        if (pageSize == null) {
+            queryPageSize = DEFAULT_PAGE_SIZE;
+        } else {
+            if (pageSize > 1000) {
+                queryPageSize = 1000;
+            } else {
+                queryPageSize = pageSize;
+            }
+        }
+
+        return PageRequest.of(queryPageNumber, queryPageSize);
     }
 
     @Autowired
