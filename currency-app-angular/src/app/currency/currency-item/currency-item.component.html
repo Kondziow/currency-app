@@ -7,7 +7,7 @@
       <strong class="text-muted">Name:</strong> {{currency.requesterName}}
     </div>
     <div>
-      <strong class="text-muted">Date:</strong> {{currency.date}}
+      <strong class="text-muted">Date:</strong> {{currency.date | date : 'medium' }}
     </div>
     <div>
       <strong class="text-muted">Value:</strong> {{currency.currencyValue}}
