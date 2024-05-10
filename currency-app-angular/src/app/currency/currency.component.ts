@@ -18,6 +18,7 @@ import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 })
 export class CurrencyComponent implements OnInit{
   currencyRecords: CurrencyRecordModel[] = [];
+  currentPageNumber: number;
 
   constructor(private currencyService: CurrencyService,
               private route: ActivatedRoute,
@@ -25,14 +26,31 @@ export class CurrencyComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.currentPageNumber = 1;
     this.getCurrencyRecords();
   }
 
   getCurrencyRecords() {
-    this.currencyService.getAllCurrencyRecords()
+    this.currencyService.getAllCurrencyRecords(this.currentPageNumber)
       .subscribe(response => {
-        this.currencyRecords = response.currencyRecords;
+        if (response.content.length === 0) {
+          this.onPrevPage();
+        } else {
+          this.currencyRecords = response.content;
+        }
       });
+  }
+
+  onNextPage() {
+    this.currentPageNumber++;
+    this.getCurrencyRecords();
+  }
+
+  onPrevPage() {
+    if (this.currentPageNumber > 1) {
+      this.currentPageNumber--;
+      this.getCurrencyRecords();
+    }
   }
 
   onSendCurrencyRequest() {

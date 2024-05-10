@@ -1,18 +1,45 @@
-<div class="row">
-  <div class="col-xs-6">
-    <hr>
-    <button class="btn btn-success" (click)="getCurrencyRecords()">Get Currency Records</button>
-    <button class="btn btn-primary" (click)="onSendCurrencyRequest()">Send Currency Request</button>
-    <hr>
-    <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngFor="let currencyReq of currencyRecords">
-        <app-currency-item [currency]="currencyReq"></app-currency-item>
-      </li>
-    </ul>
+<!--<div class="row" style="height: 650px">-->
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-6">
+      <hr>
+      <button class="btn btn-success" (click)="getCurrencyRecords()">Get Records</button> |
+      <button class="btn btn-primary" (click)="onSendCurrencyRequest()">Send Request</button>
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-6">
+            <div class="btn text-info ">Current page: {{currentPageNumber}}</div>
+          </div>
+          <div class="col-xs-6">
+            <button class="btn btn-default" (click)="onPrevPage()"><</button>
+            <button class="btn btn-default" (click)="onNextPage()">></button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let currencyReq of currencyRecords">
+          <app-currency-item [currency]="currencyReq"></app-currency-item>
+        </li>
+      </ul>
+    </div>
+    <div class="col-xs-6">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="col-xs-6">
-    <router-outlet></router-outlet>
-  </div>
+<!--  <div class="row">-->
+<!--    <div class="col-xs-6">-->
+<!--      <div class="col-xs-6">-->
+<!--        <div class="btn text-info ">Current page: {{currentPageNumber}}</div>-->
+<!--      </div>-->
+<!--      <div class="col-xs-6">-->
+<!--        <button class="btn btn-default" (click)="onPrevPage()"><</button>-->
+<!--        <button class="btn btn-default" (click)="onNextPage()">></button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
+
