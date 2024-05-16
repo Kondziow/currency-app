@@ -16,9 +16,10 @@ import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
   templateUrl: './currency.component.html',
   styleUrl: './currency.component.css'
 })
-export class CurrencyComponent implements OnInit{
+export class CurrencyComponent implements OnInit {
   currencyRecords: CurrencyRecordModel[] = [];
   currentPageNumber: number;
+  totalPages: number;
 
   constructor(private currencyService: CurrencyService,
               private route: ActivatedRoute,
@@ -33,17 +34,16 @@ export class CurrencyComponent implements OnInit{
   getCurrencyRecords() {
     this.currencyService.getAllCurrencyRecords(this.currentPageNumber)
       .subscribe(response => {
-        if (response.content.length === 0) {
-          this.onPrevPage();
-        } else {
-          this.currencyRecords = response.content;
-        }
+        this.currencyRecords = response.content;
+        this.totalPages = response.totalPages;
       });
   }
 
   onNextPage() {
-    this.currentPageNumber++;
-    this.getCurrencyRecords();
+    if (this.currentPageNumber < this.totalPages) {
+      this.currentPageNumber++;
+      this.getCurrencyRecords();
+    }
   }
 
   onPrevPage() {
