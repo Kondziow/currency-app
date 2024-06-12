@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  currency-app-angular:
+    build:
+      context: ./currency-app-angular
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - "4200:80"
+
+  currency-app-java:
+    build:
+      context: ./currency-app-java
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - "8080:8080"
