@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>wojtanowski.konrad</groupId>
 	<artifactId>currency-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>currency-app</name>
 	<description>Currency Application</description>
 	<properties>
